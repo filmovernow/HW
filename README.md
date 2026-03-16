@@ -227,12 +227,18 @@ npm install prisma@6
 ```
 
 ```
-npx prisma inint //if don't have prisma file
+npm install prisma --save-dev
 ```
 
 ```
 npm install @prisma/client@6
 ```
+
+```
+npx prisma init //if don't have prisma file
+```
+
+
 ---
 
 # Database Setup
