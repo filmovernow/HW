@@ -1,0 +1,166 @@
+openapi: 3.1.0
+info:
+  title: Book Store Inventory API
+  description: API สำหรับจัดการสต็อกสินค้าและรายการหนังสือภายในร้าน
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000
+    description: Local Development Server
+
+paths:
+  /books:
+    get:
+      summary: ดึงรายการหนังสือทั้งหมด (สรุป)
+      description: ส่งคืนรายการหนังสือในรูปแบบย่อ พร้อมราคาที่จัดรูปแบบแล้ว (priceDisplay)
+      responses:
+        '200':
+          description: สำเร็จ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booksummary'
+    post:
+      summary: เพิ่มหนังสือใหม่
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookInput'
+      responses:
+        '201':
+          description: สร้างหนังสือใหม่สำเร็จ
+        '400':
+          description: ข้อมูลไม่ครบถ้วน (เช่น ลืมใส่ชื่อหรือราคา)
+  /price:
+    get:
+      summary: เรียงราคาหนังสือ
+      parameters:
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+      responses:
+        '200':
+          description: เรียงราคาหนังสือสำเร็จ
+  /books/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: ชื่อหนังสือ
+        schema:
+          type: string
+    get:
+          summary: ค้นหาหนังสือ
+          responses:
+            '200':
+              description: พบข้อมูลหนังสือ
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/BookFull'
+            '404':
+              description: ไม่พบหนังสือชื่อนี้ในระบบ
+  /books/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: รหัส ID ของหนังสือ
+        schema:
+          type: integer
+    get:
+      summary: ดูรายละเอียดหนังสือรายชิ้น
+      responses:
+        '200':
+          description: พบข้อมูลหนังสือ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookFull'
+        '404':
+          description: ไม่พบหนังสือรหัสนี้ในระบบ
+    put:
+      summary: แก้ไขข้อมูลหนังสือ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookInput'
+      responses:
+        '200':
+          description: อัปเดตข้อมูลสำเร็จ
+        '404':
+          description: ไม่พบหนังสือที่ต้องการแก้ไข
+    delete:
+      summary: ลบหนังสือออกจากสต็อก
+      responses:
+        '204':
+          description: ลบข้อมูลสำเร็จ
+        '404':
+          description: ไม่พบหนังสือที่ต้องการลบ
+
+components:
+  schemas:
+    Booksummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Clean Code"
+        category:
+          type: string
+          example: "Programming"
+        priceDisplay:
+          type: string
+          example: "฿550"
+
+    BookFull:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        stock:
+          type: integer
+      example:
+        id: 1
+        name: "Clean Code"
+        category: "Programming"
+        price: 550
+        stock: 10
+
+    BookInput:
+      type: object
+      required:
+        - name
+        - price
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        stock:
+          type: integer
+      example:
+        name: "Clean Code"
+        category: "Programming"
+        price: 1200
+        stock: 5
