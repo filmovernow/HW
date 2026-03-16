@@ -104,7 +104,7 @@ http://localhost:8000/api-docs
 ```bash
 git clone <repo-url>
 cd homeworkweb2-1
-npm install
+npm install express
 node app.js
 ```
 
