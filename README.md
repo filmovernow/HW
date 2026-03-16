@@ -306,7 +306,21 @@ node_modules/
 They should be included in `.gitignore`.
 
 
+# Lab04 - authentication
 
+how to run? requirement is postmanด้วย
+
+```
+npm init -y
+```
+
+```
+npm install express jsonwebtoken
+```
+
+```
+npm install nodemon --save-dev
+```
 
 # Author
 
