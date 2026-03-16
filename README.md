@@ -186,6 +186,128 @@ const port = 3000;
 
 ---
 
+# Lab03 - Prisma + MySQL
+
+## Requirements
+
+Before running this project, make sure you have installed:
+
+* Node.js (version 18+ recommended)
+* MySQL
+* npm (comes with Node.js)
+
+Libraries used in this project:
+
+* Prisma ORM
+* @prisma/client
+
+---
+
+# Installation
+
+Clone the repository
+
+```
+git clone <repository-url>
+cd Lab03
+```
+
+Install dependencies
+
+```
+npm install
+```
+
+```
+npm install express
+```
+
+```
+npm install prisma@6
+```
+
+```
+npx prisma inint //if don't have prisma file
+```
+
+```
+npm install @prisma/client@6
+```
+---
+
+# Database Setup
+
+Create a `.env` file in the root folder.
+
+Example:
+
+```
+DATABASE_URL="mysql://username:password@localhost:3306/lab03db"
+```
+
+Replace:
+
+* username → your MySQL username
+* password → your MySQL password
+* lab03db → your database name
+
+---
+
+# Prisma Setup
+
+Generate Prisma Client
+
+```
+npx prisma generate
+```
+
+If database tables are not created yet, run
+
+```
+npx prisma migrate dev
+```
+
+---
+
+# Run the Program
+
+```
+node index.js
+```
+
+---
+
+# Project Structure
+
+```
+Lab03
+│
+├── prisma
+│   └── schema.prisma
+│
+├── index.js
+├── package.json
+├── package-lock.json
+├── .gitignore
+└── README.md
+```
+
+---
+
+# Notes
+
+Do NOT upload the following files to GitHub:
+
+```
+node_modules/
+.env
+```
+
+They should be included in `.gitignore`.
+
+
+
+
 # Author
 
 Student Web API Homework Project
